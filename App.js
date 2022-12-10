@@ -1,20 +1,22 @@
 import { useState } from 'react'
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import uuid from 'react-native-uuid'
 
-export default function App() {
+export default function App({items}) {
   const [goalText, setGoalText] = useState('');
-  const [goals, setGoals] = useState ([]);
+  const [goals, setGoals] = useState (items);
 
   const handleChangeGoalText = (text) => {
     setGoalText(text);
   }
 
   const handleSubmit = () => {
-    if(goalText.length < 3)
+    if(goalText.length <= 0)
     {
       return;
     }
-    setGoals((currentGoals) => [...currentGoals, goalText]);
+    const newGoal= {id: uuid.v4(), goal: goalText}
+    setGoals((currentGoals) => [...currentGoals, newGoal]);
     setGoalText('');
   }
 
@@ -30,20 +32,32 @@ export default function App() {
         <Button title="Add Goal" onPress={handleSubmit} />
       </View>
       <View style={styles.goalsContainer}>
-        <FlatList 
-          data={goals}
-          keyExtractor={item => item}
-          renderItem={({item}) => { 
-            return (
-              <View style={styles.goalItemContainer}>
-                <Text style={styles.goalItem}>{item}</Text>
-              </View>
-            )
-          }}
-        />
+          <FlatList 
+            alwaysBounceVertical={false}
+            data={goals}
+            renderItem={({item}) => { 
+              return (
+                <View style={styles.goalItemContainer}>
+                  <Text style={styles.goalItem}>{item.id}: {item.goal}</Text>
+                </View>
+              );
+            }}
+          />
       </View>
     </View>
-  );
+  )
+}
+
+App.defaultProps = {
+  items: [
+    {id: 'abgud', goal:'a'},
+    {id: 'sdids', goal:'a'},
+    {id: 'dofisd', goal:'a'},
+    {id: 'aoiduf', goal:'a'},
+    {id: 'ppdkens', goal:'a'},
+    {id: 'ccnkskd', goal:'a'},
+    {id: 'p389dsf', goal:'a'},
+  ]
 }
 
 const styles = StyleSheet.create({
