@@ -1,12 +1,21 @@
-import { useState } from 'react'
+import { StatusBar } from 'expo-status-bar';
+import { useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
-import uuid from 'react-native-uuid'
+import uuid from 'react-native-uuid';
 import GoalItem from './src/components/GoalItem';
 import GoalInput from './src/components/GoalInput';
 
 export default function App({items}) {
-  
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [goals, setGoals] = useState (items);
+
+  const startAddGoalHandler = () => {
+    setModalIsVisible(true);
+  };
+
+  const endAddGoalHandler = () => {
+    setModalIsVisible(false);
+  }
 
   const handleSubmit = (goalText) => {
     if(goalText.length <= 0)
@@ -24,8 +33,15 @@ export default function App({items}) {
   };
   
   return (
+    <>
+    <StatusBar style='light'/>
     <View style={styles.appContainer}>
-      <GoalInput handleSubmit={handleSubmit} />
+      <Button title="Add New Goal" color="#a065ac" onPress={startAddGoalHandler}/>
+      <GoalInput 
+        handleSubmit={handleSubmit} 
+        isVisible={modalIsVisible} 
+        setModalIsVisible={endAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         <FlatList 
           alwaysBounceVertical={false}
@@ -34,19 +50,8 @@ export default function App({items}) {
         />
       </View>
     </View>
+    </>
   )
-}
-
-App.defaultProps = {
-  items: [
-    {id: 'abgud', goal:'a'},
-    {id: 'sdids', goal:'a'},
-    {id: 'dofisd', goal:'a'},
-    {id: 'aoiduf', goal:'a'},
-    {id: 'ppdkens', goal:'a'},
-    {id: 'ccnkskd', goal:'a'},
-    {id: 'p389dsf', goal:'a'},
-  ]
 }
 
 const styles = StyleSheet.create({
