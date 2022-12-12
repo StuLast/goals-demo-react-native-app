@@ -9,10 +9,9 @@ const GoalInput = (props) => {
     setGoalText(text);
   };
 
-  const onPress = () => {
+  const onSubmit = () => {
     handleSubmit(goalText);
     setGoalText('');
-    setModalIsVisible();
   };
 
   return (
@@ -27,7 +26,7 @@ const GoalInput = (props) => {
         />
         <View style={styles.controlsContainer}>
           <View style={styles.button}>
-            <Button title="Add Goal" onPress={onPress} color="#b180f0"/>
+            <Button title="Add Goal" onPress={onSubmit} color="#b180f0"/>
           </View>
           <View style={styles.button}>
             <Button title='Cancel' onPress={setModalIsVisible} color="#f31282" />

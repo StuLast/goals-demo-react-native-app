@@ -7,7 +7,7 @@ import GoalInput from './src/components/GoalInput';
 
 export default function App({items}) {
   const [modalIsVisible, setModalIsVisible] = useState(false);
-  const [goals, setGoals] = useState (items);
+  const [goals, setGoals] = useState ([]);
 
   const startAddGoalHandler = () => {
     setModalIsVisible(true);
@@ -23,7 +23,8 @@ export default function App({items}) {
       return;
     }
     const newGoal= {id: uuid.v4(), goal: goalText}
-    setGoals((currentGoals) => [...currentGoals, newGoal]);
+    setGoals((state) => [...state, newGoal]);
+    endAddGoalHandler();
   };  
 
   const handleDelete =(goalId) => {
